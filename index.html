@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflection Grating — Screen Hits</title>
+<!-- Font Awesome CDN for icons -->
+<!-- Google Fonts -->
+
+<!-- Link to local and shared styles -->
+
+<style>/* --- CSS Variables from Calculator --- */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-color: #212529;
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #6c757d;
+    --secondary-hover: #5a6268;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
+    --border-color: #dee2e6;
+    --info-bg: #eef1f5;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    --border-radius: 8px;
+}
+
+/* --- General Body Styling (from Ribbon) --- */
+body {
+    font-family: 'Inter', sans-serif, system-ui;
+    background-color: var(--bg-color); /* Use theme background */
+    color: var(--text-color);
+    margin: 0;
+    font-size: 15px;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* --- Styles for the H1 Title Block (MODIFIED) --- */
+h1 {
+    /* Box model styles to match other cards */
+    max-width: 900px;
+    margin: 2rem auto 1rem auto; /* Center the box and add margin */
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+
+    /* Flexbox layout for internal content */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    /* Font styles */
+    color: var(--text-color);
+    font-size: 2.1em;
+}
+
+/* Wrapper for title and copyright notice */
+.h1-title-group {
+    flex-shrink: 0;
+}
+
+/* Main title text */
+.h1-title {
+     display: block;
+     color: #343a40;
+}
+
+/* Copyright notice below title */
+.h1-copyright {
+    font-size: 0.5em;
+    font-weight: normal;
+    color: #555;
+    margin-top: 5px;
+}
+.h1-copyright a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.h1-copyright a:hover {
+    text-decoration: underline;
+}
+
+/* Container for info items on the right */
+.h1-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    font-size: 0.4em; /* Font size reduced */
+    text-align: center;
+    align-items: flex-start;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+.info-content a, .info-content span {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.1em;
+}
+.info-content a:hover {
+    color: var(--primary-hover);
+}
+.h1-info a i {
+    font-size: 2em;
+    transition: transform 0.2s ease-in-out;
+}
+.h1-info a:hover i {
+    transform: scale(1.1);
+}
+
+/* --- Main content container --- */
+.main-content {
+    max-width: 900px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    margin: 0 auto 2rem auto; /* Adjusted top margin */
+}
+
+/* Page description below title ribbon */
+.page-description {
+    text-align: center;
+    font-size: 1.05em;
+    color: var(--secondary-color);
+    margin: 0 auto 2rem auto;
+}
+
+/* --- Original Simulator Styles --- */
+
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.canvas-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+canvas {
+    border: 1px solid #dcdcdc;
+    background-color: #000010;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+}
+
+.canvas-hint {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+    text-align: center;
+}
+
+.controls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    width: 100%;
+    /* max-width is handled by main-content and app-layout */
+    border: 1px solid #eef;
+    box-sizing: border-box;
+}
+
+@media (min-width: 1280px) {
+    /* MODIFIED: Apply max-width to both h1 and main-content */
+    h1, .main-content {
+        max-width: 1280px;
+    }
+    .app-layout {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    .controls-container {
+        max-width: 420px;
+        flex-shrink: 0;
+    }
+    .canvas-wrapper { max-width: 800px; }
+    canvas { max-width: 800px; }
+}
+
+.control-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 25px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.control-row:first-child {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+.control-row:last-child {
+    background-color: #f1f8ff;
+    border: 1px solid #c8e6ff;
+}
+
+.row-title {
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* NEW group for label and text input */
+.label-input-group {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    white-space: nowrap;
+}
+
+.label-input-group > label:last-of-type {
+    font-weight: normal; /* Make unit label normal weight */
+}
+
+/* NEW style for the number input box */
+.value-input {
+    width: 65px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    -moz-appearance: textfield; /* Firefox */
+}
+.value-input::-webkit-outer-spin-button,
+.value-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.mono-controls-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 100%;
+}
+
+input[type="range"] {
+    width: 180px; /* Slightly wider to match group */
+    cursor: pointer;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.radio-group div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.radio-group label {
+    font-weight: normal;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+}
+
+.radio-group input[type="radio"] {
+    cursor: pointer;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input-group input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.input-group button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.input-group button:hover {
+    background-color: #2980b9;
+}
+.screen-panel{margin:30px auto 0;line-height:1.6} .screen-controls{display:flex;flex-wrap:wrap;gap:24px;padding:16px;background:#eef5fc;border-radius:8px}.screen-controls input[type=number]{width:100px;padding:7px}#screenPlot,#pngPreview{width:100%;max-width:100%;height:auto}.hit-table{max-height:340px;overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:8px 12px;border-bottom:1px solid #ddd;text-align:right}td:last-child{text-align:left}.equation{background:#eef5fc;padding:12px}#downloadPlotPng{display:block;margin:12px 0;padding:10px 16px;border:0;border-radius:6px;background:#007bff;color:white;font:inherit;cursor:pointer}@media(max-width:600px){.main-content{padding:14px}h1{font-size:1.5em}.label-input-group{white-space:normal}}
+/* Two-column workspace: all settings left; diagram, explanation and results right. */
+h1,.main-content{max-width:1280px;box-sizing:border-box;width:calc(100% - 32px)}
+.main-content{padding:24px}.app-layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:24px;align-items:start}
+.controls-container{width:100%;max-width:none;min-width:0;padding:14px;gap:14px}
+.results-column{display:flex;flex-direction:column;gap:24px;min-width:0}
+.canvas-wrapper{width:100%;max-width:none;min-width:0}.canvas-wrapper canvas{display:block;width:100%;max-width:100%;height:auto}
+.description-panel,.screen-panel{margin:0;padding:18px;border:1px solid #dee2e6;border-radius:8px;line-height:1.6;min-width:0}
+.description-panel h2,.screen-panel h2{margin:0 0 12px;font-size:20px}
+.description-panel p{margin:0 0 12px}.description-panel p:last-child{margin-bottom:0}
+.control-row{padding:10px;gap:16px}.label-input-group{white-space:normal;flex-wrap:wrap}.mono-controls-group{box-sizing:border-box;padding:10px}
+.screen-controls{padding:0;background:transparent;display:flex;flex-direction:column;gap:16px;width:100%}.screen-controls label{display:block}.screen-controls input[type=range]{width:100%;margin-top:8px}
+.export-controls{width:100%}#downloadPlotPng{width:100%;margin:0}#pngExportStatus{font-size:13px;overflow-wrap:anywhere}#pngExportStatus:empty{display:none}
+#screenPlot{display:block;max-width:100%}.hit-table{margin-top:16px}#pngPreviewPanel{margin:16px 0}
+@media(max-width:850px){.app-layout{grid-template-columns:1fr}.main-content{padding:14px}.controls-container{max-width:none}.results-column{width:100%}}
+#grooveDensityInput,#gratingSpacingInput{width:105px}
+</style></head>
+<body>
+
+    <!-- This div will be populated by layout.js with the shared header content -->
+
+
+    <!-- This H1 block contains the title and info specific to this page -->
+    <h1>
+      <!-- Wrapper for title and copyright -->
+      <div class="h1-title-group">
+        <span class="h1-title">Reflection Grating — Screen Hits</span>
+        <div class="h1-copyright">
+          © 2025 <a href="https://github.com/visuphy" target="_blank" title="Visit VisuPhy on GitHub">VisuPhy</a>
+        </div>
+      </div>
+      <!-- Container for the info links -->
+      <div class="h1-info">
+        <div class="info-item">
+          <span class="info-label">About and discussion</span>
+          <div class="info-content">
+            <a href="." target="_blank" title="About and Discussion">
+               About
+            </a>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Source</span>
+          <div class="info-content">
+            <a href="https://github.com/visuphy/DiffractionGrating" target="_blank" title="View Source on GitHub">
+              GitHub
+            </a>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Original Author</span>
+          <div class="info-content">
+            <a href="https://github.com/Hussein-Tofaili" target="_blank">Hussein-Tofaili</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Other Contributors</span>
+          <div class="info-content">
+            <span style="color: #555;">none</span>
+          </div>
+        </div>
+      </div>
+    </h1>
+
+    <!-- Main content container, now holding the simulator -->
+    <div class="main-content">
+        <p class="page-description">Simulates the diffraction pattern of light from a reflective grating.</p>
+
+        <main class="app-layout">
+<div class="controls-container">
+                <!-- First Row: Incident Beam Properties -->
+                <div class="control-row">
+                    <div class="row-title">Incident Beam Properties</div>
+                    
+                    <div class="control-group">
+                        <label>Light Type</label>
+                        <div class="radio-group">
+                            <div>
+                                <input type="radio" id="monochromatic" name="lightType" value="monochromatic" checked>
+                                <label for="monochromatic">Monochromatic</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="whiteLight" name="lightType" value="whiteLight">
+                                <label for="whiteLight">White Light</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="monoControls" class="mono-controls-group">
+                        <div class="control-group">
+                            <div class="label-input-group">
+                                <label for="wavelength">Wavelength (λ):</label>
+                                <input type="number" id="wavelengthInput" value="550" step="1" class="value-input">
+                                <label for="wavelengthInput">nm</label>
+                            </div>
+                            <input type="range" id="wavelength" min="380" max="750" value="550">
+                            <div class="input-group">
+                                <input type="number" id="minWavelength" value="380">
+                                <label>to</label>
+                                <input type="number" id="maxWavelength" value="750">
+                                <button id="updateWavelengthRange">Set</button>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="label-input-group">
+                                <label for="bandwidth">Bandwidth (Δλ):</label>
+                                <input type="number" id="bandwidthInput" value="0" step="1" class="value-input">
+                                <label for="bandwidthInput">nm</label>
+                            </div>
+                            <input type="range" id="bandwidth" min="0" max="100" value="0" step="1">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="label-input-group">
+                            <label for="angle">Incidence to grating surface (α):</label>
+                            <input type="number" id="angleInput" min="0" max="180" value="45" step="0.001" class="value-input">
+                            <label for="angleInput">°</label>
+                        </div>
+                        <input type="range" id="angle" min="0" max="180" value="45" step="0.001">
+                    </div>
+                </div>
+                
+                <!-- Second Row: Grating Properties -->
+                <div class="control-row">
+                    <div class="row-title">Grating Properties</div>
+                    
+                    <div class="control-group">
+                        <div class="label-input-group">
+                            <label for="gratingSpacing">Grating Spacing (d):</label>
+                            <input type="number" id="gratingSpacingInput" value="1012.1457489878543" step="any" class="value-input">
+                            <label for="gratingSpacingInput">nm</label>
+                        </div>
+                        <input type="range" id="gratingSpacing" min="500" max="5000" step="any" value="1012.1457489878543">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="label-input-group">
+                            <label for="grooveDensity">Groove Density (Λ):</label>
+                            <input type="number" id="grooveDensityInput" value="988000" step="1" class="value-input">
+                            <label for="grooveDensityInput">m⁻¹</label>
+                        </div>
+                        <input type="range" id="grooveDensity" min="200000" max="2000000" step="1" value="988000">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="label-input-group">
+                            <label for="orders">Diffraction Orders (±m):</label>
+                            <input type="number" id="ordersInput" value="3" step="1" class="value-input">
+                        </div>
+                        <input type="range" id="orders" min="1" max="20" value="3">
+                    </div>
+                    
+                    <div class="control-group">
+                        <div class="label-input-group">
+                            <label for="grooves">Illuminated Grooves (N):</label>
+                            <input type="number" id="groovesInput" value="1000" step="100" class="value-input">
+                        </div>
+                        <input type="range" id="grooves" min="100" max="20000" value="1000" step="100">
+                    </div>
+</div>
+
+<div class="control-row"><div class="row-title">Screen settings</div><div class="screen-controls"><label>Perpendicular distance d₀ (m) <input id="screenDistance" type="number" min="0.000001" step="0.01" value="0.2"></label><label>Half-span (m) <input id="screenHalfSpan" type="number" min="0.000000001" step="0.0001" value="0.3"></label><label for="screenBeta">Screen-normal angle β: <input id="screenBetaInput" type="number" min="0" max="180" step="0.001" value="45"> °<br><input id="screenBeta" type="range" min="0" max="180" step="0.001" value="45"></label></div></div>
+<div class="export-controls"><button id="downloadPlotPng" type="button">Download plot PNG</button><p id="pngExportStatus" role="status"></p></div>
+</div>
+<div class="results-column">
+<div class="canvas-wrapper">
+                <canvas id="simulationCanvas" width="800" height="600"></canvas>
+                <p class="canvas-hint">Hint: Click on a diffraction order (in monochromatic mode) to view its properties.</p>
+                <p class="canvas-hint">The sign of the diffraction orders and the sign of angles depends on your convention. </p>
+            </div>
+        
+<section class="description-panel"><h2>Screen geometry</h2><p>α is measured between the incident direction of travel and the rightward grating surface: 0° is grazing from the left, 90° is normal incidence, and 180° is grazing from the right. β runs from the rightward grating surface to the screen normal in the upper half-plane. At β = 90°, the screen is parallel to the grating.</p>
+<p>d₀ is the perpendicular distance from the incidence point to the screen. Its perpendicular foot is x = 0. Positive x points left when β = 90°. The diagram shows a schematic segment of an ideal infinite screen.</p>
+<p class="equation">sin θₘ = cos α − mλΛ · xₘ = d₀ cos(θₘ + β) / sin(θₘ + β)</p>
+<p>Λ is groove density in m⁻¹, with grating spacing d = 1/Λ (in metres); use λ in metres in this equation. θ is measured from the grating normal. The plot is centered on zero. Hit colors match the rays; mark heights have no physical meaning. Labels give each order’s x coordinate, using the central wavelength for bandwidth or 550 nm for white light. All samples appear in the table.</p>
+</section>
+<section class="screen-panel"><h2>Screen hit positions</h2><p id="screenStatus" role="status"></p><canvas id="screenPlot" width="1800" height="920" aria-label="Ray hit positions on screen"></canvas>
+<details id="pngPreviewPanel" hidden open><summary>Exported PNG preview</summary><p>Right-click the image and choose Save image as to choose a folder.</p><img id="pngPreview" alt="Exported plot PNG"></details>
+<div class="hit-table"><table><thead><tr><th>Order m</th><th>λ (nm)</th><th>θ (°)</th><th>x (mm)</th><th>Status</th></tr></thead><tbody id="hitRows"></tbody></table></div></section>
+</div></main>
+    </div>
+
+    <!-- This div will be populated by layout.js with the shared footer content -->
+
+    
+    <!-- Scripts -->
+
+    <script>/* Screen geometry extension for the embedded VisuPhy reflection simulator. */
+window.screenExtension=(()=>{
+ const $=id=>document.getElementById(id),fmt=v=>Math.abs(v)<1e-12?'0':Number(v.toPrecision(7)).toString();
+ let hits=[],beta=Math.PI/2,distance=.2,halfSpan=.3,valid=true;
+ function intersection(theta,beta,distance){const q=Math.sin(theta+beta);return Math.abs(q)<1e-12?{status:'Parallel to screen'}:q<0?{status:'Screen behind ray'}:{status:'Hit',x:distance*Math.cos(theta+beta)/q};}
+ function update(s,ctx,center){
+  distance=Number($('screenDistance').value);halfSpan=Number($('screenHalfSpan').value);beta=Number($('screenBeta').value)*Math.PI/180;
+  $('screenBetaInput').value=$('screenBeta').value;
+  valid=$('screenDistance').value!==''&&Number.isFinite(distance)&&distance>0&&$('screenHalfSpan').value!==''&&Number.isFinite(halfSpan)&&halfSpan>0;
+  hits=[];const wavelengths=[];
+  if(s.lightType==='whiteLight'){for(let l=380;l<=750;l+=5)wavelengths.push(l);}
+  else if(s.bandwidthNM>0){const low=Math.max(1,s.wavelengthNM-s.bandwidthNM/2),high=s.wavelengthNM+s.bandwidthNM/2;for(let l=low;l<=high;l+=2)wavelengths.push(l);wavelengths.push(high,s.wavelengthNM);}
+  else wavelengths.push(s.wavelengthNM);
+  if(valid)for(let m=-s.maxOrder;m<=s.maxOrder;m++)for(const lambda of new Set(wavelengths)){
+   const q=s.calculateSinBeta(m,lambda,s.d,s.alpha),color=s.lightType==='whiteLight'&&m===0?'#fff':`hsl(${270-(lambda-380)/370*270},100%,50%)`;
+   if(Math.abs(q)>1)hits.push({m,lambda,color,status:'Non-propagating order'});
+   else{const theta=Math.asin(q);hits.push({m,lambda,theta,color,...intersection(theta,beta,distance)});}
+  }
+  const landed=hits.filter(h=>h.x!==undefined);
+  const visibleHits=landed.filter(h=>Math.abs(h.x)<=halfSpan);
+  $('screenStatus').textContent=valid?`${visibleHits.length} of ${landed.length} screen hits are within the displayed range −${fmt(halfSpan)} m to +${fmt(halfSpan)} m. ${s.lightType==='whiteLight'?'Wavelength samples: 5 nm.':s.bandwidthNM>0?'Bandwidth samples: 2 nm plus endpoints and center.':'Exact monochromatic positions; no smoothing.'}`:'Enter a positive finite screen distance and half-span.';
+  $('hitRows').innerHTML=hits.map(h=>`<tr><td>${h.m}</td><td>${fmt(h.lambda)}</td><td>${h.theta===undefined?'—':fmt(h.theta*180/Math.PI)}</td><td>${h.x===undefined?'—':fmt(h.x * 1000)}</td><td>${h.status}</td></tr>`).join('');
+  const c=$('screenPlot'),g=c.getContext('2d');g.setTransform(2,0,0,2,100,20);g.fillStyle='#000010';g.fillRect(-50,-10,900,460);g.font='13px Arial';g.textAlign='center';
+  const extent=halfSpan;
+  const px=x=>400+350*x/extent;
+  for(let k=-3;k<=3;k++){g.strokeStyle=k===0?'#94a3b8':'#253047';g.beginPath();g.moveTo(px(extent*k/3),40);g.lineTo(px(extent*k/3),255);g.stroke();}
+  g.strokeStyle='#94a3b8';g.beginPath();g.moveTo(50,255);g.lineTo(750,255);g.stroke();g.fillStyle='#e2e8f0';g.fillText('x = 0',400,28);g.fillText('Position along screen, x (mm)',400,422);
+  const labelLambda=s.lightType==='whiteLight'?550:s.wavelengthNM;
+  for(const h of landed){if(Math.abs(h.x)>halfSpan)continue;const x=px(h.x);g.strokeStyle=h.color;g.lineWidth=1.5;g.beginPath();g.moveTo(x,255);g.lineTo(x,95);g.stroke();g.fillStyle=h.color;g.beginPath();g.arc(x,95,3,0,2*Math.PI);g.fill();
+   if(h.lambda===labelLambda){g.save();g.translate(x,275);g.rotate(Math.PI/3);g.textAlign='left';g.fillStyle='#e2e8f0';g.fillText(`m=${h.m}: x=${fmt(h.x * 1000)}`,0,0);g.restore();}
+  }
+  if(!landed.length){g.fillStyle='#e2e8f0';g.fillText('No forward screen intersections',400,150);}
+  if(!valid)return;
+  const n={x:Math.cos(beta),y:-Math.sin(beta)},e={x:-Math.sin(beta),y:-Math.cos(beta)},foot={x:center.x+155*n.x,y:center.y+155*n.y};
+  ctx.save();ctx.strokeStyle='#38d9ef';ctx.fillStyle='#38d9ef';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(foot.x-180*e.x,foot.y-180*e.y);ctx.lineTo(foot.x+180*e.x,foot.y+180*e.y);ctx.stroke();ctx.setLineDash([4,4]);ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(center.x,center.y);ctx.lineTo(foot.x,foot.y);ctx.stroke();ctx.setLineDash([]);ctx.font='13px Arial';ctx.textAlign='left';ctx.fillText(`d₀ = ${fmt(distance)} m`,center.x+75*n.x+8,center.y+75*n.y);ctx.fillText('x = 0',foot.x+8,foot.y+16);ctx.fillText('+x',foot.x+165*e.x,foot.y+165*e.y-8);ctx.beginPath();ctx.arc(center.x,center.y,36,-beta,0);ctx.stroke();ctx.fillText(`β = ${fmt(beta*180/Math.PI)}°`,center.x+40,center.y+20);
+  for(const h of landed){const offset=h.x/distance*155;if(Math.abs(offset)>180)continue;ctx.fillStyle=h.color;ctx.beginPath();ctx.arc(foot.x+offset*e.x,foot.y+offset*e.y,4,0,2*Math.PI);ctx.fill();}ctx.restore();
+ }
+ document.addEventListener('DOMContentLoaded',()=>{
+  for(const id of ['screenDistance','screenHalfSpan'])$(id).addEventListener('input',()=>$('angle').dispatchEvent(new Event('input')));
+  $('screenBeta').addEventListener('input',()=>{
+   $('screenBetaInput').value=$('screenBeta').value;
+   $('angle').dispatchEvent(new Event('input'));
+  });
+  $('screenBetaInput').addEventListener('change',()=>{
+   let value=Number($('screenBetaInput').value);
+   if(!Number.isFinite(value)){ $('screenBetaInput').value=$('screenBeta').value; return; }
+   value=Math.min(180,Math.max(0,value));
+   $('screenBeta').value=value;
+   $('screenBetaInput').value=$('screenBeta').value;
+   $('angle').dispatchEvent(new Event('input'));
+  });
+  $('downloadPlotPng').addEventListener('click',async()=>{
+   const status=$('pngExportStatus'),c=$('screenPlot');
+   try{const data=c.toDataURL('image/png');$('pngPreview').src=data;$('pngPreviewPanel').hidden=false;
+    if(typeof window.showSaveFilePicker==='function'){
+     const handle=await window.showSaveFilePicker({suggestedName:'reflection-screen-plot.png',types:[{description:'PNG image',accept:{'image/png':['.png']}}]});
+     const blob=await new Promise(resolve=>c.toBlob(resolve,'image/png'));if(!blob)throw new Error('PNG encoding failed');const stream=await handle.createWritable();await stream.write(blob);await stream.close();status.textContent='Saved '+handle.name+' to your chosen folder.';
+    }else{const a=document.createElement('a');a.href=data;a.download='reflection-screen-plot.png';document.body.appendChild(a);a.click();a.remove();status.textContent='PNG created and download requested. If no file appears, right-click the preview below and choose Save image as, or open this page in Edge or Chrome.';}
+   }catch(e){status.textContent=e.name==='AbortError'?'Save cancelled; the PNG preview is still available.':'Automatic save failed: '+e.message+'. Right-click the preview to save it, or use Edge or Chrome.';}
+  });
+ });
+ return {update,intersection};
+})();
+</script>
+<script>document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('simulationCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Get all interactive elements
+    const wavelengthSlider = document.getElementById('wavelength');
+    const angleSlider = document.getElementById('angle');
+    const gratingSpacingSlider = document.getElementById('gratingSpacing');
+    const grooveDensitySlider = document.getElementById('grooveDensity');
+    const ordersSlider = document.getElementById('orders');
+    const groovesSlider = document.getElementById('grooves');
+    const lightTypeRadios = document.querySelectorAll('input[name="lightType"]');
+    const bandwidthSlider = document.getElementById('bandwidth');
+
+    // Monochromatic controls
+    const monoControls = document.getElementById('monoControls');
+    const minWavelengthInput = document.getElementById('minWavelength');
+    const maxWavelengthInput = document.getElementById('maxWavelength');
+    const updateWavelengthBtn = document.getElementById('updateWavelengthRange');
+    
+    // Text input boxes for sliders
+    const wavelengthInput = document.getElementById('wavelengthInput');
+    const bandwidthInput = document.getElementById('bandwidthInput');
+    const angleInput = document.getElementById('angleInput');
+    const gratingSpacingInput = document.getElementById('gratingSpacingInput');
+    const grooveDensityInput = document.getElementById('grooveDensityInput');
+    const ordersInput = document.getElementById('ordersInput');
+    const groovesInput = document.getElementById('groovesInput');
+
+    const gratingCenter = { x: canvas.width / 2, y: canvas.height / 2 };
+    const BEAM_LENGTH = canvas.width;
+
+    let diffractedRays = [];
+    let selectedRay = null;
+
+    function updateSpacingFromDensity() {
+        const density = parseFloat(grooveDensitySlider.value);
+        const newSpacing = 1e9 / density;
+        gratingSpacingSlider.value = newSpacing;
+        grooveDensityInput.value = density;
+        gratingSpacingInput.value = newSpacing;
+    }
+
+    function updateDensityFromSpacing() {
+        const spacing = parseFloat(gratingSpacingSlider.value);
+        const newDensity = Math.round(1e9 / spacing);
+        grooveDensitySlider.value = newDensity;
+        // Keep spacing reciprocal to the density selected on the 1 m⁻¹ grid.
+        updateSpacingFromDensity();
+    }
+
+    function draw() {
+        const incidentAngleDegrees = parseInt(angleSlider.value);
+        const gratingSpacingNM = parseFloat(gratingSpacingSlider.value);
+        const maxOrder = parseInt(ordersSlider.value);
+        const numGrooves = parseInt(groovesSlider.value);
+        const lightType = document.querySelector('input[name="lightType"]:checked').value;
+        const wavelengthNM = parseInt(wavelengthSlider.value);
+        const bandwidthNM = parseInt(bandwidthSlider.value);
+        
+        const alpha = incidentAngleDegrees * (Math.PI / 180);
+        const d = gratingSpacingNM;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        diffractedRays = [];
+        
+        const tempRays = [];
+        const smears = [];
+        const labels = [];
+        
+        if (lightType === 'monochromatic') {
+            const startLambda = wavelengthNM - bandwidthNM / 2;
+            const endLambda = wavelengthNM + bandwidthNM / 2;
+            for (let m = -maxOrder; m <= maxOrder; m++) {
+                const sin_beta_center = calculateSinBeta(m, wavelengthNM, d, alpha);
+                if (sin_beta_center >= -1 && sin_beta_center <= 1) {
+                    const beta_center = Math.asin(sin_beta_center);
+                    const path = createRayPath(beta_center);
+                    tempRays.push({ order: m, angleDegrees: beta_center * (180 / Math.PI), path: path });
+                    labels.push({ order: m, beta: beta_center });
+                }
+                if (bandwidthNM > 0) {
+                    for (let lambda = startLambda; lambda <= endLambda; lambda += 2) {
+                        const sin_beta = calculateSinBeta(m, lambda, d, alpha);
+                        if (sin_beta >= -1 && sin_beta <= 1) {
+                            const hue = 270 - ((lambda - 380) / (750 - 380)) * 270;
+                            smears.push({ beta: Math.asin(sin_beta), color: `hsl(${hue}, 100%, 50%)`, lineWidth: 1 });
+                        }
+                    }
+                }
+            }
+        } else { 
+            for (let m = -maxOrder; m <= maxOrder; m++) {
+                if (m === 0) {
+                    const sin_beta = calculateSinBeta(0, 550, d, alpha);
+                    if (sin_beta >= -1 && sin_beta <= 1) {
+                        smears.push({ beta: Math.asin(sin_beta), color: '#FFFFFF', lineWidth: 3, order: 0 });
+                    }
+                } else {
+                    for (let lambda = 380; lambda <= 750; lambda += 5) {
+                        const sin_beta = calculateSinBeta(m, lambda, d, alpha);
+                        if (sin_beta >= -1 && sin_beta <= 1) {
+                            const hue = 270 - ((lambda - 380) / (750 - 380)) * 270;
+                            smears.push({ beta: Math.asin(sin_beta), color: `hsl(${hue}, 100%, 50%)`, lineWidth: 2 });
+                        }
+                    }
+                }
+                const sin_beta_label = calculateSinBeta(m, 550, d, alpha);
+                if (sin_beta_label >= -1 && sin_beta_label <= 1) {
+                    labels.push({ order: m, beta: Math.asin(sin_beta_label) });
+                }
+            }
+        }
+
+        diffractedRays = tempRays;
+        if (selectedRay) {
+            selectedRay = diffractedRays.find(ray => ray.order === selectedRay.order) || null;
+        }
+
+        ctx.fillStyle = '#cccccc';
+        ctx.fillRect(gratingCenter.x - 200, gratingCenter.y, 400, 5);
+        ctx.beginPath();
+        ctx.setLineDash([5, 5]);
+        ctx.strokeStyle = '#888888';
+        ctx.lineWidth = 1;
+        ctx.moveTo(gratingCenter.x, 0);
+        ctx.lineTo(gratingCenter.x, canvas.height);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        let beamColor = '#FFFFFF';
+        if (lightType === 'monochromatic') {
+            const centralHue = 270 - ((wavelengthNM - 380) / (750 - 380)) * 270;
+            beamColor = `hsl(${centralHue}, 100%, 50%)`;
+        }
+        drawIncidentBeam(Math.PI / 2 - alpha, beamColor);
+
+        smears.forEach(smear => {
+             const y_direction = -1;
+             const endX = gratingCenter.x + BEAM_LENGTH * Math.sin(smear.beta);
+             const endY = gratingCenter.y + y_direction * BEAM_LENGTH * Math.cos(smear.beta);
+             ctx.strokeStyle = smear.color;
+             ctx.lineWidth = smear.lineWidth;
+             ctx.beginPath();
+             ctx.moveTo(gratingCenter.x, gratingCenter.y);
+             ctx.lineTo(endX, endY);
+             ctx.stroke();
+        });
+
+        if (lightType === 'monochromatic') {
+             diffractedRays.forEach(ray => {
+                 drawRay(Math.asin(calculateSinBeta(ray.order, wavelengthNM, d, alpha)), beamColor, 2, ray.order);
+             });
+        }
+        
+        labels.forEach(label => {
+            drawOrderLabel(label.order, label.beta);
+        });
+
+        if (lightType === 'monochromatic') {
+            highlightAndDisplayData(wavelengthNM, d, numGrooves);
+        }
+        window.screenExtension.update({alpha,d,maxOrder,wavelengthNM,bandwidthNM,lightType,calculateSinBeta},ctx,gratingCenter);
+    }
+    
+    function createRayPath(beta) {
+        const y_direction = -1;
+        const endX = gratingCenter.x + BEAM_LENGTH * Math.sin(beta);
+        const endY = gratingCenter.y + y_direction * BEAM_LENGTH * Math.cos(beta);
+        const path = new Path2D();
+        path.moveTo(gratingCenter.x, gratingCenter.y);
+        path.lineTo(endX, endY);
+        return path;
+    }
+
+    function calculateSinBeta(m, lambda, d, alpha) {
+        return Math.cos(alpha) - (m * lambda / d);
+    }
+
+    function drawLaserPointer(sourceX, sourceY, angle) {
+        const length = 60;
+        const width = 20;
+        const dirX = Math.sin(angle);
+        const dirY = Math.cos(angle);
+        const perpX = -dirY;
+        const perpY = dirX;
+        const backX = sourceX - dirX * length;
+        const backY = sourceY - dirY * length;
+        const halfWidth = width / 2;
+        const corner1X = backX + perpX * halfWidth;
+        const corner1Y = backY + perpY * halfWidth;
+        const corner2X = backX - perpX * halfWidth;
+        const corner2Y = backY - perpY * halfWidth;
+        const corner3X = sourceX - perpX * halfWidth;
+        const corner3Y = sourceY - perpY * halfWidth;
+        const corner4X = sourceX + perpX * halfWidth;
+        const corner4Y = sourceY + perpY * halfWidth;
+        
+        ctx.fillStyle = '#333333';
+        ctx.beginPath();
+        ctx.moveTo(corner1X, corner1Y);
+        ctx.lineTo(corner2X, corner2Y);
+        ctx.lineTo(corner3X, corner3Y);
+        ctx.lineTo(corner4X, corner4Y);
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.fillStyle = '#888888';
+        ctx.beginPath();
+        ctx.arc(sourceX, sourceY, halfWidth, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(sourceX, sourceY, 3, 0, Math.PI * 2);
+        ctx.fill();
+        
+        ctx.fillStyle = '#ff0000';
+        ctx.beginPath();
+        ctx.arc(backX, backY, 4, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function drawArrow(ctx, x, y, angle, size, color) {
+        const arrowSize = size || 8;
+        const arrowAngle = Math.PI / 6; 
+        
+        ctx.save();
+        ctx.translate(x, y);
+        
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-arrowSize * Math.cos(angle - arrowAngle), -arrowSize * Math.sin(angle - arrowAngle));
+        ctx.lineTo(-arrowSize * Math.cos(angle + arrowAngle), -arrowSize * Math.sin(angle + arrowAngle));
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.restore();
+    }
+
+    function drawIncidentBeam(alpha, color) {
+        const laserDistance = Math.min(canvas.width, canvas.height) * 0.4;
+        const sourceX = gratingCenter.x - laserDistance * Math.sin(alpha);
+        const sourceY = gratingCenter.y - laserDistance * Math.cos(alpha);
+        
+        drawLaserPointer(sourceX, sourceY, alpha);
+        
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(sourceX, sourceY);
+        ctx.lineTo(gratingCenter.x, gratingCenter.y);
+        ctx.stroke();
+        
+        const dx = gratingCenter.x - sourceX;
+        const dy = gratingCenter.y - sourceY;
+        const beamAngle = Math.atan2(dy, dx);
+        
+        const arrowDistance = laserDistance * 0.7;
+        const arrowX = gratingCenter.x - arrowDistance * Math.sin(alpha);
+        const arrowY = gratingCenter.y - arrowDistance * Math.cos(alpha);
+        drawArrow(ctx, arrowX, arrowY, beamAngle, 8, color);
+    }
+
+    function drawRay(beta, color, lineWidth, order) {
+        const isSelected = selectedRay && selectedRay.order === order;
+        ctx.strokeStyle = isSelected ? '#FFFF00' : color;
+        ctx.lineWidth = isSelected ? 4 : lineWidth;
+        const y_direction = -1;
+        const path = createRayPath(beta);
+        ctx.stroke(path);
+        
+        const arrowDistance = BEAM_LENGTH * 0.3;
+        const arrowX = gratingCenter.x + arrowDistance * Math.sin(beta);
+        const arrowY = gratingCenter.y + y_direction * arrowDistance * Math.cos(beta);
+        
+        let arrowAngle = Math.atan2(y_direction * Math.cos(beta), Math.sin(beta));
+        
+        drawArrow(ctx, arrowX, arrowY, arrowAngle, 6, isSelected ? '#FFFF00' : color);
+        
+        return path;
+    }
+    
+    function drawOrderLabel(order, beta) {
+        const isSelected = selectedRay && selectedRay.order === order;
+        ctx.fillStyle = isSelected ? '#FFFF00' : '#ffffff';
+        const y_direction = -1;
+        ctx.font = '14px Arial';
+        const labelX = gratingCenter.x + 250 * Math.sin(beta);
+        const labelY = gratingCenter.y + y_direction * 250 * Math.cos(beta);
+        ctx.fillText(`m = ${order}`, labelX, labelY);
+    }
+    
+    function highlightAndDisplayData(lambda, d, numGrooves) {
+        const incidentAngleDegrees = parseInt(angleSlider.value);
+        const alpha_rad = incidentAngleDegrees * (Math.PI / 180);
+
+        ctx.fillStyle = '#A0B8FF';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText('Littrow Condition (for m=1):', 20, canvas.height - 70);
+
+        ctx.font = '16px Arial';
+        const littrowWavelength = 2 * d * Math.cos(alpha_rad); 
+        ctx.fillText(`Wavelength for α=${incidentAngleDegrees}°: ${littrowWavelength.toFixed(1)} nm`, 20, canvas.height - 45);
+
+        const sin_alpha_L = lambda / (2 * d);
+        if (Math.abs(sin_alpha_L) <= 1) {
+            const littrowAngle_deg = Math.acos(sin_alpha_L) * (180 / Math.PI);
+            ctx.fillText(`Angle for λ=${lambda}nm: ${littrowAngle_deg.toFixed(2)}°`, 20, canvas.height - 20);
+        } else {
+            ctx.fillText(`Angle for λ=${lambda}nm: Not Possible`, 20, canvas.height - 20);
+        }
+
+        if (selectedRay) {
+            ctx.fillStyle = '#FFFF00';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'left';
+
+            const m = selectedRay.order;
+            const beta_rad = selectedRay.angleDegrees * (Math.PI / 180);
+            ctx.fillText(`Diffraction angle for m=${m}: ${selectedRay.angleDegrees.toFixed(2)}°`, 20, 30);
+            
+            const cos_beta = Math.cos(beta_rad);
+            if (cos_beta !== 0 && m !== 0) {
+                const dispersion_rad_nm = Math.abs(m / (d * cos_beta));
+                const dispersion_deg_nm = dispersion_rad_nm * (180 / Math.PI);
+                ctx.fillText(`Angular Dispersion: ${dispersion_deg_nm.toFixed(4)} °/nm`, 20, 55);
+
+                const c = 299792458;
+                const lambda_m = lambda * 1e-9;
+                const d_m = d * 1e-9;
+                
+                const gvd_numerator = -1 * Math.pow(m, 2) * Math.pow(lambda_m, 3);
+                const gvd_denominator = 2 * Math.PI * Math.pow(c, 2) * Math.pow(d_m, 2) * Math.pow(cos_beta, 3);
+                const gvd_s2_m = gvd_denominator === 0 ? 0 : gvd_numerator / gvd_denominator;
+                const gvd_ps2_m = gvd_s2_m * 1e24;
+                ctx.fillText(`Temporal Dispersion: ${gvd_ps2_m.toExponential(3)} ps²/m`, 20, 80);
+
+                const resolvingPower = Math.abs(m * numGrooves);
+                const deltaLambda = lambda / resolvingPower;
+                ctx.fillText(`Resolving Power: ${Math.round(resolvingPower)}`, 20, 105);
+                ctx.fillText(`Min Resolvable Δλ: ${deltaLambda.toFixed(4)} nm`, 20, 130);
+            }
+        }
+    }
+    
+    function updateUI() {
+        const lightType = document.querySelector('input[name="lightType"]:checked').value;
+        monoControls.style.display = (lightType === 'monochromatic') ? 'flex' : 'none';
+        draw();
+    }
+
+    function updateWavelengthRange() {
+        const minVal = parseInt(minWavelengthInput.value);
+        const maxVal = parseInt(maxWavelengthInput.value);
+        if (isNaN(minVal) || isNaN(maxVal) || minVal >= maxVal || minVal < 1) {
+            alert("Invalid range: Minimum must be a positive number and less than the maximum.");
+            minWavelengthInput.value = wavelengthSlider.min;
+            maxWavelengthInput.value = wavelengthSlider.max;
+            return;
+        }
+        wavelengthSlider.min = minVal;
+        wavelengthSlider.max = maxVal;
+        
+        let currentWavelength = parseInt(wavelengthSlider.value);
+        if (currentWavelength < minVal) wavelengthSlider.value = minVal;
+        if (currentWavelength > maxVal) wavelengthSlider.value = maxVal;
+        
+        wavelengthInput.value = wavelengthSlider.value;
+        draw();
+    }
+    
+    canvas.addEventListener('click', (event) => {
+        const lightType = document.querySelector('input[name="lightType"]:checked').value;
+        if (lightType === 'whiteLight' || diffractedRays.length === 0) return;
+
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = (event.clientX - rect.left) * canvas.width / rect.width;
+        const mouseY = (event.clientY - rect.top) * canvas.height / rect.height;
+        
+        let clickedRay = null;
+        for (let i = diffractedRays.length - 1; i >= 0; i--) {
+            ctx.lineWidth = 10;
+            if (ctx.isPointInStroke(diffractedRays[i].path, mouseX, mouseY)) {
+                clickedRay = diffractedRays[i];
+                break;
+            }
+        }
+
+        if (clickedRay) {
+            selectedRay = (selectedRay && selectedRay.order === clickedRay.order) ? null : clickedRay;
+        } else {
+            selectedRay = null;
+        }
+        draw();
+    });
+    
+    const controlMap = [
+        { slider: wavelengthSlider, input: wavelengthInput },
+        { slider: bandwidthSlider, input: bandwidthInput },
+        { slider: angleSlider, input: angleInput },
+        { slider: gratingSpacingSlider, input: gratingSpacingInput, onchange: updateDensityFromSpacing },
+        { slider: grooveDensitySlider, input: grooveDensityInput, onchange: updateSpacingFromDensity },
+        { slider: ordersSlider, input: ordersInput },
+        { slider: groovesSlider, input: groovesInput },
+    ];
+
+    controlMap.forEach(({ slider, input, onchange }) => {
+        slider.addEventListener('input', () => {
+            input.value = slider.value;
+            if (onchange) onchange();
+        });
+        
+        input.addEventListener('change', () => {
+            let value = parseFloat(input.value);
+            if (!Number.isFinite(value)) {input.value=slider.value;return;}
+            const min = parseFloat(slider.min);
+            const max = parseFloat(slider.max);
+
+            if (slider === wavelengthSlider) {
+                if (isNaN(value) || value < 1) {
+                    input.value = slider.value;
+                    return;
+                }
+                const range = 200;
+                const newMin = Math.max(1, value - range);
+                const newMax = value + range;
+                
+                minWavelengthInput.value = newMin;
+                maxWavelengthInput.value = newMax;
+                
+                slider.min = newMin;
+                slider.max = newMax;
+                slider.value = value;
+
+            } else {
+                if (value < min) value = min;
+                if (value > max) value = max;
+                input.value = value;
+                slider.value = value;
+            }
+           
+            if (onchange) onchange();
+            draw();
+        });
+    });
+
+    const allSliders = controlMap.map(item => item.slider);
+    allSliders.forEach(slider => slider.addEventListener('input', draw));
+
+    const resets = [...lightTypeRadios];
+    resets.forEach(control => control.addEventListener('input', () => {
+        selectedRay = null;
+        updateUI(); 
+    }));
+    
+    updateWavelengthBtn.addEventListener('click', updateWavelengthRange);
+
+    updateSpacingFromDensity();
+    updateUI();
+});</script>
+</body>
+</html>
