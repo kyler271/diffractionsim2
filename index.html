@@ -495,7 +495,9 @@ const geo = drawAxes(xMin, xMax, yMinL, yMaxL, logScale);
   // no re-summing the grating), so it updates live without needing a re-sweep.
   function updateDisplay(){
     if(!lastResult) return;
-    const {xMin, xMax, sampleDx, xs, logScale, rawI} = lastResult;
+    const {xMin, xMax, sampleDx, xs, rawI} = lastResult;
+    const logScale = $('v_log').checked;
+    lastResult.logScale = logScale;
     const smoothWidthM = Math.max(0, parseFloat($('smoothWindow').value)*1e-3 || 0);
     const curI = $('v_smooth').checked ? smoothArray(rawI, smoothWidthM, sampleDx) : rawI;
     const curPlot = curI.map(v => logScale ? (v>0 ? Math.log10(v) : null) : v);
@@ -506,6 +508,7 @@ const geo = drawAxes(xMin, xMax, yMinL, yMaxL, logScale);
     $('statMax').textContent = fmtI(isFinite(maxI) ? maxI : null);
     renderIntensity(curPlot, xMin, xMax, logScale, undefined, xs);
   }
+  $('v_log').addEventListener('change', updateDisplay);
   $('v_smooth').addEventListener('change', updateDisplay);
   $('smoothWindow').addEventListener('input', updateDisplay);
   ['v_yCenter','v_ySpan'].forEach(id => $(id).addEventListener('input', redrawFromCache));
